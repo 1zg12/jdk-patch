@@ -3,16 +3,16 @@ package org.jdk-patch;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class CacheSplitter<T> implements Spliterator<T> {
+public class FixedSizeSpliterator<T> implements Spliterator<T> {
 //    private final Collection<T> collection;
     private final T[] values;
     private int start;
     private int end;
     private final int THRESHOLD;
-    public CacheSplitter(T[] values, int threshold) {
+    public FixedSizeSpliterator(T[] values, int threshold) {
         this(values, 0, values.length, threshold);
     }
-    public CacheSplitter(T[] values, int start, int end, int threshold) {
+    public FixedSizeSpliterator(T[] values, int start, int end, int threshold) {
         this.values = values;
         this.start = start;
         this.end = end;
@@ -34,7 +34,7 @@ public class CacheSplitter<T> implements Spliterator<T> {
             return null;
         }
         int mid = (start + end)/2;
-        return new CacheSplitter(values, start, start= mid+1, THRESHOLD);
+        return new FixedSizeSpliterator(values, start, start= mid+1, THRESHOLD);
     }
 
     @Override
